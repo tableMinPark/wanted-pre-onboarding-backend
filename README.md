@@ -42,7 +42,7 @@
      # redis 설정 파일 생성
      sudo nano /data/redis/conf/redis.conf
      ```
-     ```conf
+     ```shell
      # redis.conf
      bind 0.0.0.0
      port 6379
@@ -53,7 +53,6 @@
      # 도커 컴포즈 실행
      sudo docker compose up -d
      ```
-     - redis 환경 설정
   
 - 데이터베이스 테이블 구조
   
