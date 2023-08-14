@@ -25,8 +25,16 @@
      git clone https://github.com/tableMinPark/wanted-pre-onboarding-backend.git
      ```
 
-  3. 도커 컴포즈 실행
+  3. 빌드 및 도커 컴포즈 실행
      ```
+     // java 11 설치
+     sudo apt-get install openjdk-11-jdk
+     
+     // 프로젝트 빌드
+     cd wanted
+     sh build.sh
+
+     // 도커 컴포즈 실행
      sudo docker compose up -d
      ```
   
