@@ -17,7 +17,7 @@ public enum FailCode implements BasicFailCode {
     EXPIRED_ACCESS_TOKEN(HttpStatus.UNAUTHORIZED, "엑세스 토큰 만료", "액세스 토큰이 만료되었습니다."),
     UN_AUTHENTICATION_TOKEN(HttpStatus.UNAUTHORIZED, "토큰 불일치", "회원에 등록된 토큰과 입력 토큰이 일치하지 않습니다.");
 
-    private final HttpStatus httpStatus;
-    private final String title;
-    private final String content;
+    public final HttpStatus httpStatus;
+    public final String title;
+    public final String content;
 }

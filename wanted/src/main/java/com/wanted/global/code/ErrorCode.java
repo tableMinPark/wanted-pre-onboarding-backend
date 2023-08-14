@@ -13,7 +13,7 @@ public enum ErrorCode {
     NOT_MODIFY(HttpStatus.INTERNAL_SERVER_ERROR,"데이터 수정 오류", 503),
     NOT_DELETE(HttpStatus.INTERNAL_SERVER_ERROR,"데이터 삭제 오류", 504);
 
-    private final HttpStatus httpStatus;
-    private final String message;
-    private final Integer code;
+    public final HttpStatus httpStatus;
+    public final String message;
+    public final Integer code;
 }
