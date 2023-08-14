@@ -1,0 +1,45 @@
+version: "3"
+
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:8.0.33
+    ports:
+      - 3306:3306
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=wanted.!
+      - TZ=Asia/Seoul
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --max_connections=300
+    volumes:
+      - /data/mysql/var/lib/mysql:/var/lib/mysql
+      - /data/mysql/etc/mysql/conf.d:/etc/mysql/conf.d
+    networks:
+      data-net:
+        ipv4_address: 10.0.0.10
+
+  redis:
+    container_name: redis
+    image: redis:7.0.8
+    ports:
+      - 6379:6379
+    restart: always
+    volumes:
+      - /data/redis/conf/redis.conf:/etc/redis/redis.conf
+      - /data/redis/data:/data
+    command: redis-server /etc/redis/redis.conf
+    networks:
+      data-net:
+        ipv4_address: 10.0.0.20
+
+networks:
+  data-net:
+    name: data-net
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.0.0/24
+          gateway: 10.0.0.1
