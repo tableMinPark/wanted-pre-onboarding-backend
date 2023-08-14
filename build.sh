@@ -1,0 +1,2 @@
+cd ./wanted
+./gradlew build

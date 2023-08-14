@@ -35,6 +35,15 @@ services:
       data-net:
         ipv4_address: 10.0.0.20
 
+  api:
+    container_name: api
+    environment:
+      - TZ=Asia/Seoul
+    build: ./
+    networks:
+      data-net:
+        ipv4_address: 10.0.0.30
+
 networks:
   data-net:
     name: data-net
