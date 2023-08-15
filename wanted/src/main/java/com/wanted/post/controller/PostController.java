@@ -69,7 +69,7 @@ public class PostController {
     }
 
     @PutMapping("/{postId}")
-    private ResponseEntity<Object> modifyPost(@PathVariable("postId") Integer postId,
+    private ResponseEntity<Object> modifyPost(@PathVariable("postId") Long postId,
                                               ModifyPostReqDto modifyPostReqDto) {
         log.info("modifyPost - Call");
 
@@ -86,7 +86,7 @@ public class PostController {
     }
 
     @DeleteMapping("/{postId}")
-    private ResponseEntity<Object> deletePost(@PathVariable("postId") Integer postId) {
+    private ResponseEntity<Object> deletePost(@PathVariable("postId") Long postId) {
         log.info("deletePost - Call");
 
         Long memberId = AuthoritiesUtil.getMemberId();

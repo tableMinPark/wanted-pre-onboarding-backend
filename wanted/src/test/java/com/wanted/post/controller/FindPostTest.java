@@ -42,11 +42,8 @@ class FindPostTest {
         return member.getMemberId();
     }
 
-    Long registerPost(int num) {
+    Long registerPost(String title, String content) {
         Long memberId = registerMember();
-
-        String title = String.format("%d", num);
-        String content = String.format("%d", num);
 
         Post post = Post.builder()
                 .title(title)
@@ -60,11 +57,14 @@ class FindPostTest {
         return post.getPostId();
     }
 
+
     @DisplayName("게시물 조회 테스트")
     @Test
     @Transactional
     void findPostTest() {
-        Long postId = registerPost(0);
+        String title = "조회 제목 테스트";
+        String content = "조회 본문 테스트";
+        Long postId = registerPost(title, content);
 
         try {
             FindPostResDto findPostResDto = postService.findPost(postId);
