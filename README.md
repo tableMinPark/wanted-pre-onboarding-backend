@@ -59,6 +59,36 @@
      # 도커 컴포즈 실행
      sudo docker compose up -d
      ```
+  6. 데이터베이스 설정
+     ```sql
+     CREATE DATABASE  IF NOT EXISTS `wanted`;
+     USE `wanted`;
+     
+     DROP TABLE IF EXISTS `post`;
+     DROP TABLE IF EXISTS `member`;
+     
+     CREATE TABLE `member` (
+       `member_id` bigint NOT NULL AUTO_INCREMENT,
+       `email` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+       `password` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+       `reg_dt` datetime NOT NULL,
+       `role` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+       PRIMARY KEY (`member_id`),
+       UNIQUE KEY `email_UNIQUE` (`email`)
+     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    
+     CREATE TABLE `post` (
+       `post_id` bigint NOT NULL AUTO_INCREMENT,
+       `member_id` bigint NOT NULL,
+       `content` text COLLATE utf8mb4_unicode_ci NOT NULL,
+       `title` text COLLATE utf8mb4_unicode_ci NOT NULL,
+       `upd_dt` datetime NOT NULL,
+       `reg_dt` datetime NOT NULL,
+       PRIMARY KEY (`post_id`),
+       KEY `FK83s99f4kx8oiqm3ro0sasmpww` (`member_id`),
+       CONSTRAINT `FK83s99f4kx8oiqm3ro0sasmpww` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`)
+     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+     ```
   6. API 앤드포인트
      - 회원가입 앤드포인트
         - POST : **/auth/reguster**
