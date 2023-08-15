@@ -1,4 +1,4 @@
-package com.wanted.global.config;
+package com.wanted.global.redis;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
