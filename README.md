@@ -37,7 +37,7 @@
      sudo apt-get install openjdk-11-jdk
      
      # 프로젝트 빌드
-     cd wanted
+     cd wanted-pre-onboarding-backend
      sh build.sh
      ```
   4. redis 환경 설정
