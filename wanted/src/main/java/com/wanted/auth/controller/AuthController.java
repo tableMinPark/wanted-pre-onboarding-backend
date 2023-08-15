@@ -2,6 +2,7 @@ package com.wanted.auth.controller;
 
 import com.wanted.auth.dto.request.LoginMemberReqDto;
 import com.wanted.auth.dto.request.RegisterMemberReqDto;
+import com.wanted.auth.dto.response.LoginMemberResDto;
 import com.wanted.auth.service.AuthService;
 import com.wanted.global.code.FailCode;
 import com.wanted.global.exception.fail.NotFoundException;
@@ -23,6 +24,7 @@ public class AuthController {
     @PostMapping("/register")
     private ResponseEntity<Object> registerMember(RegisterMemberReqDto registerMemberReqDto) {
         log.info("registerMember - Call");
+
         String email = registerMemberReqDto.getEmail();
         String password = registerMemberReqDto.getPassword();
 
@@ -37,6 +39,15 @@ public class AuthController {
     @PostMapping("/login")
     private ResponseEntity<Object> loginMember(LoginMemberReqDto loginMemberReqDto) {
         log.info("loginMember - Call");
-        return ResponseEntity.ok().body(new SuccessResponse(null));
+
+        String email = loginMemberReqDto.getEmail();
+        String password = loginMemberReqDto.getPassword();
+
+        if (email == null || password == null) {
+            throw new NotFoundException(FailCode.INVALID_ARGS);
+        }
+
+        LoginMemberResDto loginMemberResDto = authService.loginMember(email, password);
+        return ResponseEntity.ok().body(new SuccessResponse(loginMemberResDto));
     }
 }

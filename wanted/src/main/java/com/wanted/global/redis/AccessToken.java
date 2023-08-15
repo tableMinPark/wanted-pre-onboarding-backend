@@ -14,5 +14,6 @@ public class AccessToken {
     @Id
     private Long memberId;
     private String accessToken;
+    private Long expire;
     private LocalDateTime expireTime;
 }

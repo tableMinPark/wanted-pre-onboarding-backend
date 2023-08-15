@@ -1,6 +1,7 @@
 
 package com.wanted.global.security;
 
+import com.wanted.global.redis.AccessToken;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 
 @Component
@@ -51,16 +54,27 @@ public class TokenProvider {
         return expiration.before(new Date());
     }
 
-    private String generateAccessToken(String memberId, String role) {
+    public AccessToken generateAccessToken(Long memberId, String role) {
         Claims claims = Jwts.claims();
         claims.put("memberId", memberId);
         claims.put("role", role);
 
-        return Jwts.builder()
-            .setClaims(claims)
-            .setIssuedAt(new Date(System.currentTimeMillis()))
-            .setExpiration(new Date(System.currentTimeMillis() + JWT_EXPIRED))
-            .signWith(getSigningKey(JWT_KEY), SignatureAlgorithm.HS256)
-            .compact();
+        long now = System.currentTimeMillis();
+        Date issuedAt = new Date(now);
+        Date expiration = new Date(now + JWT_EXPIRED);
+
+        String accessToken = Jwts.builder()
+                .setClaims(claims)
+                .setIssuedAt(issuedAt)
+                .setExpiration(expiration)
+                .signWith(getSigningKey(JWT_KEY), SignatureAlgorithm.HS256)
+                .compact();
+
+        return AccessToken.builder()
+                .memberId(memberId)
+                .accessToken(accessToken)
+                .expire(JWT_EXPIRED)
+                .expireTime(expiration.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())
+                .build();
     }
 }

@@ -21,20 +21,22 @@ class AccessTokenRepositoryTest {
     void registerAndFindAccessTokenTest() {
         Long memberId = 0L;
         String accessToken = UUID.randomUUID().toString();
-        Long expired = 1000L * 15L;
+        long expired = 1000L * 15L;
 
         AccessToken token = AccessToken.builder()
                 .accessToken(accessToken)
                 .memberId(memberId)
+                .expire(expired)
                 .expireTime(LocalDateTime.now().plusSeconds(expired / 1000))
                 .build();
         // 저장
-        accessTokenRepository.save(memberId, token, expired);
+        accessTokenRepository.save(memberId, token);
         // 조회
-        token = accessTokenRepository.findByMemberId(memberId);
+        token = accessTokenRepository.findByMemberId(memberId).get();
         // 삭제
         accessTokenRepository.deleteByMemberId(memberId);
 
+        assertNotNull(token);
         assertEquals(accessToken, token.getAccessToken());
     }
 }

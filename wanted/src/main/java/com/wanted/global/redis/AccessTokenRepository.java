@@ -5,6 +5,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Repository
@@ -15,17 +16,17 @@ public class AccessTokenRepository {
         this.accessTokenRedisTemplate = accessTokenRedisTemplate;
     }
 
-    public void save(Long memberId, AccessToken accessToken, Long expire) {
+    public void save(Long memberId, AccessToken accessToken) {
         String key = memberId.toString();
         ValueOperations<String, AccessToken> valueOperations = accessTokenRedisTemplate.opsForValue();
         valueOperations.set(key, accessToken);
-        accessTokenRedisTemplate.expire(key, expire, TimeUnit.MILLISECONDS);
+        accessTokenRedisTemplate.expire(key, accessToken.getExpire(), TimeUnit.MILLISECONDS);
     }
 
-    public AccessToken findByMemberId(Long memberId) {
+    public Optional<AccessToken> findByMemberId(Long memberId) {
         String key = memberId.toString();
         ValueOperations<String, AccessToken> valueOperations = accessTokenRedisTemplate.opsForValue();
-        return valueOperations.get(key);
+        return Optional.ofNullable(valueOperations.get(key));
     }
 
     public void deleteByMemberId(Long memberId) {
