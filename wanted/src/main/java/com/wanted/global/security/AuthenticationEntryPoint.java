@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 @RequiredArgsConstructor
 public class AuthenticationEntryPoint implements org.springframework.security.web.AuthenticationEntryPoint {
-
     // 스프링 시큐리티 인증 불가 핸들러
     // 유효한 토큰이 없어 인증에 필요한 정보가 없는 경우 해당 핸들러가 응답
     @Override

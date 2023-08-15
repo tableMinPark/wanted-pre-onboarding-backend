@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 @RequiredArgsConstructor
 public class AccessDeniedHandler implements org.springframework.security.web.access.AccessDeniedHandler {
-
     // 스프링 시큐리티 인가 실패 핸들러
     // 접근 권한이 없어 인가가 불가한 경우에 해당 핸들러가 응답
     @Override

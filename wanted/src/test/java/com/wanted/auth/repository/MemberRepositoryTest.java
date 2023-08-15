@@ -25,15 +25,14 @@ class MemberRepositoryTest {
     void registerAndFindMemberTest() {
         String email = UUID.randomUUID().toString();
         String password = UUID.randomUUID().toString();
-
+        // 저
         Member registerMember = Member.builder()
                 .email(email)
                 .password(password)
                 .role(role)
                 .build();
         memberRepository.save(registerMember);
-
-        // 조회
+        // 조회 및 검장
         Optional<Member> member = memberRepository.findById(registerMember.getMemberId());
         assertTrue(member.isPresent());
     }
@@ -56,14 +55,12 @@ class MemberRepositoryTest {
         Long memberId = registerMember.getMemberId();
         Optional<Member> member = memberRepository.findById(memberId);
         assertTrue(member.isPresent());
-
         // 수정
         String modifyEmail = UUID.randomUUID().toString();
         Member modifyMember = member.get();
         modifyMember.setEmail(modifyEmail);
         memberRepository.save(modifyMember);
-
-        // 수정 후 조회
+        // 재 조회 및 검증 (수정한 회원 정보)
         member = memberRepository.findById(memberId);
         assertTrue(member.isPresent());
         modifyMember = member.get();
@@ -76,7 +73,7 @@ class MemberRepositoryTest {
     void deleteMemberTest() {
         String email = UUID.randomUUID().toString();
         String password = UUID.randomUUID().toString();
-
+        // 등록
         Member registerMember = Member.builder()
                 .email(email)
                 .password(password)

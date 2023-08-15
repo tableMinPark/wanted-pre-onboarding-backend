@@ -32,9 +32,9 @@ public class SecurityConfig {
             .csrf().disable()
 
             .authorizeRequests()
+            .antMatchers(HttpMethod.PUT, "/post/**").hasAnyAuthority(RoleCode.USER.code, RoleCode.ADMIN.code)
+            .antMatchers(HttpMethod.DELETE, "/post/**").hasAnyAuthority(RoleCode.USER.code, RoleCode.ADMIN.code)
             .antMatchers("/auth/**", "/post/**").permitAll()
-            .antMatchers(HttpMethod.PUT, "/post/").hasAnyAuthority(RoleCode.USER.code, RoleCode.ADMIN.code)
-            .antMatchers(HttpMethod.DELETE, "/post/").hasAnyAuthority(RoleCode.USER.code, RoleCode.ADMIN.code)
 
             .and()
             .exceptionHandling()
@@ -47,7 +47,7 @@ public class SecurityConfig {
             .and()
             .formLogin().disable();
 
-        http.addFilterBefore(new TokenAuthenticationFilter(tokenProvider, memberRepository), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new TokenAuthenticationFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class);
         http.addFilterBefore(new TokenExceptionFilter(), TokenAuthenticationFilter.class);
         return http.build();
     }

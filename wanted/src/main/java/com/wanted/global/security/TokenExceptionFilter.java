@@ -19,12 +19,12 @@ public class TokenExceptionFilter extends GenericFilterBean {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse response, FilterChain chain) {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-        String accessToken = request.getHeader("Authorization");
 
         try {
             chain.doFilter(request, response);
         } catch (Exception e) {
-            log.error("TokenExceptionFilter : 서비스에 접근할 수 없음 :  {}", accessToken);
+            e.printStackTrace();
+            log.error("TokenExceptionFilter : 서비스에 접근할 수 없음");
             SecurityResponse.setErrorResponse((HttpServletResponse) response, ErrorCode.INTERNAL_SERVER);
         }
     }

@@ -21,29 +21,28 @@ public class CustomUserDetail implements UserDetails {
     private String memberId;
     private List<String> roles;
 
-    public static UserDetails of(String memberId, String role) {
+    public static UserDetails of(Long memberId, String role) {
         return CustomUserDetail.builder()
-            .memberId(memberId)
+            .memberId(memberId.toString())
             .roles(new ArrayList<>(){{ add(role); }})
             .build();
     }
-
     /** 멤버 id **/
-    @Override
-    public String getUsername() {
-        return memberId;
-    }
-    /** 비밀번호 **/
-    @Override
-    public String getPassword() {
-        return null;
-    }
+    public Long getMemberId() { return Long.parseLong(memberId); }
     /** 권한 목록 **/
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream()
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
+    }
+    @Override
+    public String getUsername() {
+        return null;
+    }
+    @Override
+    public String getPassword() {
+        return null;
     }
     @Override
     public boolean isAccountNonExpired() {

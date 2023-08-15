@@ -41,8 +41,8 @@ public class TokenProvider {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String getMemberId(String accessToken) {
-        return extractAllClaims(accessToken).get("memberId", String.class);
+    public Long getMemberId(String accessToken) {
+        return extractAllClaims(accessToken).get("memberId", Long.class);
     }
 
     public String getRole(String accessToken) {

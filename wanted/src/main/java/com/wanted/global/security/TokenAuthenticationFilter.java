@@ -23,7 +23,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TokenAuthenticationFilter extends GenericFilterBean {
     private final TokenProvider tokenProvider;
-    private final MemberRepository memberRepository;
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse response, FilterChain chain) throws RuntimeException, ServletException, IOException {
@@ -34,7 +33,7 @@ public class TokenAuthenticationFilter extends GenericFilterBean {
         if (accessToken != null) {
             accessToken = accessToken.substring(7);
 
-            String memberId = tokenProvider.getMemberId(accessToken);
+            Long memberId = tokenProvider.getMemberId(accessToken);
             String role = tokenProvider.getRole(accessToken);
 
             UserDetails userDetails = CustomUserDetail.of(memberId, role);
