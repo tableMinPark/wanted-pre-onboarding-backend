@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class FindPostResDto {
+    private Long postId;
     private Long memberId;
     private String title;
     private String content;

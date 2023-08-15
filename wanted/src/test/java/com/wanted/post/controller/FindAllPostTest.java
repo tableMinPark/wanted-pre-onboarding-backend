@@ -1,27 +1,28 @@
-package com.wanted.post.service;
+package com.wanted.post.controller;
 
 import com.wanted.auth.entity.Member;
 import com.wanted.auth.repository.MemberRepository;
-import com.wanted.global.code.FailCode;
 import com.wanted.global.code.RoleCode;
-import com.wanted.global.exception.fail.InvalidArgsException;
 import com.wanted.post.dto.response.FindAllPostResDto;
 import com.wanted.post.entity.Post;
 import com.wanted.post.repository.PostRepository;
+import com.wanted.post.service.PostService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-class PostServiceTest {
+class FindAllPostTest {
+    @Autowired
+    private PostService postService;
     @Autowired
     private PostRepository postRepository;
     @Autowired
@@ -59,60 +60,43 @@ class PostServiceTest {
         }
     }
 
-    @DisplayName("게시물 등록 테스트")
-    @Test
-    @Transactional
-    void registerPostTest() {
-        Long memberId = registerMember();
-        String title = "제목 테스트";
-        String content = "본문 테스트";
-
-        try {
-            if (!StringUtils.hasText(title) || !StringUtils.hasText(content)) {
-                throw new RuntimeException();
-            }
-
-            Post post = Post.builder()
-                    .member(Member.builder()
-                            .memberId(memberId)
-                            .build())
-                    .title(title)
-                    .content(content)
-                    .build();
-            postRepository.save(post);
-
-            // 저장 확인
-            postRepository.findById(post.getPostId())
-                    .orElseThrow(RuntimeException::new);
-        } catch (RuntimeException e) {
-            e.printStackTrace();
-            fail();
-        }
-    }
-
     @DisplayName("게시물 목록 조회 테스트")
     @Test
     @Transactional
-    void findAllPostTest() {
-        registerPost(5);
+    void registerPostTest() {
+        registerPost(10);
 
         int page = 1;
         int size = 5;
-        int num = 5;
+        int num = 10;
+
+        List<FindAllPostResDto> findAllPostResDtoList = postService.findAllPost(page, size);
+        // 검증
+        for (int idx = 0; idx < 5; idx++) {
+            assertEquals(String.valueOf(--num), findAllPostResDtoList.get(idx).getTitle());
+        }
+
+        page = 2;
+        findAllPostResDtoList = postService.findAllPost(page, size);
+        // 검증
+        for (int idx = 0; idx < 5; idx++) {
+            assertEquals(String.valueOf(--num), findAllPostResDtoList.get(idx).getTitle());
+        }
+    }
+
+    @DisplayName("페이지 유효성 테스트")
+    @Test
+    @Transactional
+    void invalidArgsTest() {
+        int page = 0;
+        int size = 5;
 
         try {
-            if (page <= 0) {
-                throw new RuntimeException();
-            }
-            List<Post> postList = postRepository.findAllByOrderByPostIdDesc(PageRequest.of(page - 1, size)).toList();
-            List<FindAllPostResDto> findAllPostResDtoList = FindAllPostResDto.toList(postList);
-            // 검증
-            for (int idx = 0; idx < 5; idx++) {
-                assertEquals(String.valueOf(--num), findAllPostResDtoList.get(idx).getTitle());
-            }
+            postService.findAllPost(page, size);
         } catch (RuntimeException e) {
-            e.printStackTrace();
-            fail();
+            assertTrue(true);
+            return;
         }
+        fail();
     }
 }

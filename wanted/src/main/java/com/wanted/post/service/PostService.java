@@ -8,8 +8,11 @@ import com.wanted.post.dto.response.FindPostResDto;
 import com.wanted.post.entity.Post;
 import com.wanted.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -34,8 +37,12 @@ public class PostService {
         postRepository.save(post);
     }
 
-    public FindAllPostResDto findAllPost(Integer page, Integer size) {
-        return FindAllPostResDto.builder().build();
+    public List<FindAllPostResDto> findAllPost(Integer page, Integer size) {
+        if (page <= 0) {
+            throw new InvalidArgsException(FailCode.INVALID_PAGE);
+        }
+        List<Post> postList = postRepository.findAllByOrderByPostIdDesc(PageRequest.of(page - 1, size)).toList();
+        return FindAllPostResDto.toList(postList);
     }
 
     public FindPostResDto findPost(Integer postId) {

@@ -18,6 +18,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -50,8 +52,8 @@ public class PostController {
             throw new NotFoundException(FailCode.INVALID_ARGS);
         }
 
-        FindAllPostResDto findAllPostResDto = postService.findAllPost(page, size);
-        return ResponseEntity.ok().body(new SuccessResponse(findAllPostResDto));
+        List<FindAllPostResDto> findAllPostResDtoList = postService.findAllPost(page, size);
+        return ResponseEntity.ok().body(new SuccessResponse(findAllPostResDtoList));
     }
 
     @GetMapping("/{postId}")

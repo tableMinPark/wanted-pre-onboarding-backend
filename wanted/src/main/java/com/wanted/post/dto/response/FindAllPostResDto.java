@@ -11,16 +11,19 @@ import java.util.stream.Collectors;
 @Data
 @Builder
 public class FindAllPostResDto {
+    private Long postId;
     private Long memberId;
     private String title;
     private LocalDateTime regDt;
 
     private static FindAllPostResDto of(Post post) {
+        Long postId = post.getPostId();
         Long memberId = post.getMember().getMemberId();
         String title = post.getTitle();
         LocalDateTime regDt = post.getRegDt();
 
         return FindAllPostResDto.builder()
+                .postId(postId)
                 .memberId(memberId)
                 .title(title)
                 .regDt(regDt)
