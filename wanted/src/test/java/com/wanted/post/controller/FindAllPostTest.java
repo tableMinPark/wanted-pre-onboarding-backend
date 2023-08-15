@@ -57,6 +57,7 @@ class FindAllPostTest {
                     .build();
             postRepository.save(post);
         }
+        postRepository.flush();
     }
 
     @DisplayName("게시물 목록 조회 테스트")

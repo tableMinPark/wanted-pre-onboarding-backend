@@ -78,7 +78,15 @@ public class PostService {
         post.setContent(content);
     }
 
+    @Transactional
     public void deletePost(Long memberId, Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new NotFoundException(FailCode.NOT_FOUND_POST));
 
+        if (!memberId.equals(post.getMember().getMemberId())) {
+            throw new UnAuthException(FailCode.UN_AUTHENTICATION_POST);
+        }
+
+        postRepository.deleteById(postId);
     }
 }

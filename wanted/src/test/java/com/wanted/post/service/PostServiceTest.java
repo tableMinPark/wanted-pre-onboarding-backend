@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -59,6 +60,7 @@ class PostServiceTest {
                     .build();
             postRepository.save(post);
         }
+        postRepository.flush();
     }
 
     Long registerPost(String title, String content) {
@@ -72,6 +74,7 @@ class PostServiceTest {
                         .build())
                 .build();
         postRepository.save(post);
+        postRepository.flush();
 
         return post.getPostId();
     }
@@ -85,6 +88,7 @@ class PostServiceTest {
                         .build())
                 .build();
         postRepository.save(post);
+        postRepository.flush();
 
         return post.getPostId();
     }
@@ -185,7 +189,7 @@ class PostServiceTest {
 
             // 게시물과 회원 일치 여부 확인
             if (!memberId.equals(post.getMember().getMemberId())) {
-                throw new UnAuthException(FailCode.UN_AUTHENTICATION_POST);
+                throw new RuntimeException();
             }
 
             String modifyTitle = "수정 제목 테스트";
@@ -200,6 +204,34 @@ class PostServiceTest {
 
             assertNotEquals(title, post.getTitle());
             assertNotEquals(content, post.getContent());
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            fail();
+        }
+    }
+
+    @DisplayName("게시물 삭제 테스트")
+    @Test
+    @Transactional
+    void deletePostTest() {
+        Long memberId = registerMember();
+        String title = "조회 제목 테스트";
+        String content = "조회 본문 테스트";
+        Long postId = registerPost(memberId, title, content);
+
+        try {
+            Post post = postRepository.findById(postId)
+                    .orElseThrow(RuntimeException::new);
+
+            // 게시물과 회원 일치 여부 확인
+            if (!memberId.equals(post.getMember().getMemberId())) {
+                throw new RuntimeException();
+            }
+
+            postRepository.deleteById(postId);
+            postRepository.flush();
+            // 재 조회 및 검증
+            assertFalse(postRepository.findById(postId).isPresent());
         } catch (RuntimeException e) {
             e.printStackTrace();
             fail();

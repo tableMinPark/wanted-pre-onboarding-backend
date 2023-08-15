@@ -47,6 +47,7 @@ class ModifyPostTest {
                         .build())
                 .build();
         postRepository.save(post);
+        postRepository.flush();
 
         return post.getPostId();
     }
