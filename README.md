@@ -88,6 +88,10 @@
        KEY `FK83s99f4kx8oiqm3ro0sasmpww` (`member_id`),
        CONSTRAINT `FK83s99f4kx8oiqm3ro0sasmpww` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`)
      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+     
+     create user 'wanted2'@'%' identified by 'wanted.!';
+     GRANT ALL PRIVILEGES ON wanted.* TO 'wanted2'@'%';
      ```
   6. api 재시작
      ```shell
