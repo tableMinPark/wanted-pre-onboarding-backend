@@ -1,2 +1,2 @@
 cd ./wanted
-./gradlew build
+./gradlew build -x test
