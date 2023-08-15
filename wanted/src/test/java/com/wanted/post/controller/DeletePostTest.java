@@ -70,7 +70,7 @@ class DeletePostTest {
         }
     }
 
-    @DisplayName("게시물 삭제 테스트")
+    @DisplayName("회원 일치 여부 확인 테스트")
     @Test
     @Transactional
     void invalidMemberIdTest() {

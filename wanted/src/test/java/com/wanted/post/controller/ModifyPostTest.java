@@ -120,4 +120,26 @@ class ModifyPostTest {
         }
         fail();
     }
+
+    @DisplayName("회원 일치 여부 확인 테스트")
+    @Test
+    @Transactional
+    void invalidMemberIdTest() {
+        Long memberId = registerMember();
+        String title = "조회 제목 테스트";
+        String content = "조회 본문 테스트";
+        Long postId = registerPost(memberId, title, content);
+
+        String modifyTitle = "수정 제목 테스트";
+        String modifyContent = "수정 본문 테스트";
+
+        try {
+            postService.modifyPost(0L, postId, modifyTitle, modifyContent);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            assertTrue(true);
+            return;
+        }
+        fail();
+    }
 }
