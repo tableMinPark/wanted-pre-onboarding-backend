@@ -66,8 +66,8 @@ class RegisterMemberTest {
     @Test
     @Transactional
     void invalidArgsTest1() {
-        String email = null;
-        String password = null;
+        String email = "";
+        String password = "";
 
         try {
             authService.registerMember(email, password);
@@ -82,7 +82,7 @@ class RegisterMemberTest {
     @Transactional
     void invalidArgsTest2() {
         String email = "test@test.com";
-        String password = null;
+        String password = "";
 
         try {
             authService.registerMember(email, password);
@@ -96,7 +96,7 @@ class RegisterMemberTest {
     @Test
     @Transactional
     void invalidArgsTest3() {
-        String email = null;
+        String email = "";
         String password = "12345678";
 
         try {
@@ -114,7 +114,7 @@ class RegisterMemberTest {
     @Transactional
     void duplicationMemberTest() {
         String email = "test@test.com";
-        String password = "1234";
+        String password = "12345678";
 
         try {
             authService.registerMember(email, password);

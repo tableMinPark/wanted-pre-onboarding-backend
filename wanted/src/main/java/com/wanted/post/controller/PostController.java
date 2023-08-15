@@ -29,6 +29,7 @@ public class PostController {
     private ResponseEntity<Object> registerPost(RegisterPostReqDto registerPostReqDto) {
         log.info("registerPost - Call");
 
+        Long memberId = AuthoritiesUtil.getMemberId();
         String title = registerPostReqDto.getTitle();
         String content = registerPostReqDto.getContent();
 
@@ -36,7 +37,7 @@ public class PostController {
             throw new NotFoundException(FailCode.INVALID_ARGS);
         }
 
-        postService.registerPost(title, content);
+        postService.registerPost(memberId, title, content);
         return ResponseEntity.ok().body(new SuccessResponse(null));
     }
 
@@ -70,6 +71,7 @@ public class PostController {
                                               ModifyPostReqDto modifyPostReqDto) {
         log.info("modifyPost - Call");
 
+        Long memberId = AuthoritiesUtil.getMemberId();
         String title = modifyPostReqDto.getTitle();
         String content = modifyPostReqDto.getContent();
 
@@ -77,7 +79,7 @@ public class PostController {
             throw new NotFoundException(FailCode.INVALID_ARGS);
         }
 
-        postService.modifyPost(postId, title, content);
+        postService.modifyPost(memberId, postId, title, content);
         return ResponseEntity.ok().body(new SuccessResponse(null));
     }
 
@@ -85,11 +87,13 @@ public class PostController {
     private ResponseEntity<Object> deletePost(@PathVariable("postId") Integer postId) {
         log.info("deletePost - Call");
 
+        Long memberId = AuthoritiesUtil.getMemberId();
+
         if (postId == null) {
             throw new NotFoundException(FailCode.INVALID_ARGS);
         }
 
-        postService.deletePost(postId);
+        postService.deletePost(memberId, postId);
         return ResponseEntity.ok().body(new SuccessResponse(null));
     }
 }

@@ -117,8 +117,8 @@ class LoginMemberTest {
     @Test
     @Transactional
     void invalidArgsTest1() {
-        String email = null;
-        String password = null;
+        String email = "";
+        String password = "";
 
         try {
             authService.loginMember(email, password);
@@ -135,7 +135,7 @@ class LoginMemberTest {
     @Test
     @Transactional
     void invalidArgsTest2() {
-        String email = null;
+        String email = "";
         String password = "12345678";
 
         try {
@@ -154,7 +154,7 @@ class LoginMemberTest {
     @Transactional
     void invalidArgsTest3() {
         String email = "test@test.com";
-        String password = null;
+        String password = "";
 
         try {
             authService.loginMember(email, password);
