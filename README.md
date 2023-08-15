@@ -117,7 +117,8 @@
   ![erd](assets/erd.png)
   
 - 구현한 API의 동작을 촬영한 데모 영상 링크
-  
+
+  [API 동작 데모 영상](https://youtu.be/uDXxPIH2QCI)
   
 - 구현 방법 및 이유에 대한 간략한 설명
   - Spring Boot 기반 RESTFul API
