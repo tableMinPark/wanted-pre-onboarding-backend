@@ -89,7 +89,11 @@
        CONSTRAINT `FK83s99f4kx8oiqm3ro0sasmpww` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`)
      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
      ```
-  6. API 앤드포인트
+  6. api 재시작
+     ```shell
+     sudo docker compose restart api
+     ``` 
+  7. API 앤드포인트
      - 회원가입 앤드포인트
         - POST : **/auth/reguster**
      - 로그인 앤드포인트
