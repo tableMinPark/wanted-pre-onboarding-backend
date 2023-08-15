@@ -69,8 +69,8 @@
       
       CREATE TABLE `member` (
         `member_id` bigint NOT NULL AUTO_INCREMENT,
-        `email` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-        `password` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+        `email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+        `password` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
         `reg_dt` datetime NOT NULL,
         `role` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
         PRIMARY KEY (`member_id`),
