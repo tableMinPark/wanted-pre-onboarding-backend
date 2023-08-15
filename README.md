@@ -98,19 +98,19 @@
      ``` 
   7. API 앤드포인트
      - 회원가입 앤드포인트
-        - POST : **/auth/reguster**
+        - POST : **http://18.222.127.100:8080/auth/reguster**
      - 로그인 앤드포인트
-        - POST : **/auth/login**
+        - POST : **http://18.222.127.100:8080/auth/login**
      - 게시물 생성 앤드포인트
-        - POST : **/post**
+        - POST : **http://18.222.127.100:8080/post**
      - 게시물 목록 조회 앤드포인트
-        - GET : **/post**
+        - GET : **http://18.222.127.100:8080/post**
      - 게시물 조회 앤드포인트
-        - GET : **/post/{postId}**
+        - GET : **http://18.222.127.100:8080/post/{postId}**
      - 게시물 수정 앤드포인트
-        - PUT : **/post/{postId}**
+        - PUT : **http://18.222.127.100:8080/post/{postId}**
      - 게시물 삭제 앤드포인트
-        - DELETE : **/post/{postId}**
+        - DELETE : **http://18.222.127.100:8080/post/{postId}**
   
 - 데이터베이스 테이블 구조
   
