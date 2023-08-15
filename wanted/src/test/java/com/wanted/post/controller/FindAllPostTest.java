@@ -11,7 +11,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -42,7 +41,7 @@ class FindAllPostTest {
         return member.getMemberId();
     }
 
-    void registerPost(int length) {
+    void registerPostList(int length) {
         Long memberId = registerMember();
 
         for (int num = 0; num < length; num++) {
@@ -63,8 +62,8 @@ class FindAllPostTest {
     @DisplayName("게시물 목록 조회 테스트")
     @Test
     @Transactional
-    void registerPostTest() {
-        registerPost(10);
+    void findAllPostTest() {
+        registerPostList(10);
 
         int page = 1;
         int size = 5;

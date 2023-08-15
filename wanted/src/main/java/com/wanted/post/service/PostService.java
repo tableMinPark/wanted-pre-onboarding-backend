@@ -3,6 +3,7 @@ package com.wanted.post.service;
 import com.wanted.auth.entity.Member;
 import com.wanted.global.code.FailCode;
 import com.wanted.global.exception.fail.InvalidArgsException;
+import com.wanted.global.exception.fail.NotFoundException;
 import com.wanted.post.dto.response.FindAllPostResDto;
 import com.wanted.post.dto.response.FindPostResDto;
 import com.wanted.post.entity.Post;
@@ -45,8 +46,10 @@ public class PostService {
         return FindAllPostResDto.toList(postList);
     }
 
-    public FindPostResDto findPost(Integer postId) {
-        return FindPostResDto.builder().build();
+    public FindPostResDto findPost(Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new NotFoundException(FailCode.NOT_FOUND_POST));
+        return FindPostResDto.of(post);
     }
 
     public void modifyPost(Long memberId, Integer postId, String title, String content) {

@@ -57,7 +57,7 @@ public class PostController {
     }
 
     @GetMapping("/{postId}")
-    private ResponseEntity<Object> findPost(@PathVariable("postId") Integer postId) {
+    private ResponseEntity<Object> findPost(@PathVariable("postId") Long postId) {
         log.info("findPost - Call");
 
         if (postId == null) {

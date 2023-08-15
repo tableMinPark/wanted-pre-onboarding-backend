@@ -21,6 +21,7 @@ public enum FailCode implements BasicFailCode {
     INVALID_TITLE(HttpStatus.BAD_REQUEST, "잘못된 요청", "title 값이 비어있습니다."),
     INVALID_CONTENT(HttpStatus.BAD_REQUEST, "잘못된 요청", "content 값이 비어있습니다."),
     INVALID_PAGE(HttpStatus.BAD_REQUEST, "잘못된 요청", "page 값이 1 이상이여야 합니다."),
+    NOT_FOUND_POST(HttpStatus.BAD_REQUEST, "잘못된 요청", "post id 와 일치하는 게시물이 없습니다."),
     // Spring Security
     NOT_FOUND_AUTHORITIES(HttpStatus.NOT_FOUND, "인가 정보가 없음", "인가 정보가 없어서 회원 ID 를 찾을 수 없습니다."),
     EXPIRED_ACCESS_TOKEN(HttpStatus.UNAUTHORIZED, "엑세스 토큰 만료", "액세스 토큰이 만료되었습니다.");

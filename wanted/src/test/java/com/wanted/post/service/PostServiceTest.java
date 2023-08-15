@@ -6,6 +6,7 @@ import com.wanted.global.code.FailCode;
 import com.wanted.global.code.RoleCode;
 import com.wanted.global.exception.fail.InvalidArgsException;
 import com.wanted.post.dto.response.FindAllPostResDto;
+import com.wanted.post.dto.response.FindPostResDto;
 import com.wanted.post.entity.Post;
 import com.wanted.post.repository.PostRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -41,7 +42,7 @@ class PostServiceTest {
         return member.getMemberId();
     }
 
-    void registerPost(int length) {
+    void registerPostList(int length) {
         Long memberId = registerMember();
 
         for (int num = 0; num < length; num++) {
@@ -58,6 +59,25 @@ class PostServiceTest {
             postRepository.save(post);
         }
     }
+
+    Long registerPost(int num) {
+        Long memberId = registerMember();
+
+        String title = String.format("%d", num);
+        String content = String.format("%d", num);
+
+        Post post = Post.builder()
+                .title(title)
+                .content(content)
+                .member(Member.builder()
+                        .memberId(memberId)
+                        .build())
+                .build();
+        postRepository.save(post);
+
+        return post.getPostId();
+    }
+
 
     @DisplayName("게시물 등록 테스트")
     @Test
@@ -94,7 +114,7 @@ class PostServiceTest {
     @Test
     @Transactional
     void findAllPostTest() {
-        registerPost(5);
+        registerPostList(5);
 
         int page = 1;
         int size = 5;
@@ -106,10 +126,31 @@ class PostServiceTest {
             }
             List<Post> postList = postRepository.findAllByOrderByPostIdDesc(PageRequest.of(page - 1, size)).toList();
             List<FindAllPostResDto> findAllPostResDtoList = FindAllPostResDto.toList(postList);
+
             // 검증
             for (int idx = 0; idx < 5; idx++) {
                 assertEquals(String.valueOf(--num), findAllPostResDtoList.get(idx).getTitle());
             }
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            fail();
+        }
+    }
+
+    @DisplayName("게시물 조회 테스트")
+    @Test
+    @Transactional
+    void findPostTest() {
+        int num = 0;
+        Long postId = registerPost(num);
+
+        try {
+            Post post = postRepository.findById(postId)
+                    .orElseThrow(RuntimeException::new);
+
+            FindPostResDto findPostResDto = FindPostResDto.of(post);
+
+            assertEquals(String.valueOf(num), findPostResDto.getTitle());
         } catch (RuntimeException e) {
             e.printStackTrace();
             fail();
